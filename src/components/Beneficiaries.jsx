@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Beneficiaries() {
     const baseUrl = 'http://localhost:8001' ;
+    const navigate = useNavigate();
 
     const [beneficiaries, setBeneficiaries] = useState([]);
     const token = localStorage.getItem('auth_token');
@@ -15,6 +17,9 @@ function Beneficiaries() {
         .catch(error => console.error("Error fetching beneficiaries:", error));
     }, []);
     
+    const viewBeneficiary = (id) => {
+        navigate(`/beneficiary/${id}`);
+    };
 
     return (
         <div>
@@ -23,7 +28,10 @@ function Beneficiaries() {
 
             <ul>
                 {beneficiaries.map((b) => (
-                    <li key={b.id}>{b.name} {b.father_name} {b.lastname} -{b.phone_number}</li>
+                    <li key={b.id}>{b.name} {b.father_name} {b.lastname} -{b.phone_number}
+                    <button onClick={() => viewBeneficiary(b.id)}>
+                    عرض
+                  </button></li>
                 ))}
             </ul>
         </div>

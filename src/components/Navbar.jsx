@@ -47,8 +47,16 @@ function Navbar({setToken}) {
 
 // Basic Styling for Navbar
 const styles = {
+    
     navbar: {
-        background: '#007BFF',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        '@media (minwidth: 768px)': {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+        },
+        background: '#2D336B',
         padding: '10px',
         textAlign: 'center',
         position: 'fixed',
@@ -82,8 +90,8 @@ const styles = {
         fontSize: '18px',
         padding: '10px 15px',
         margin : '10px',
-        background: '#28a745',
-        color: 'white',
+        background: '#2D336B',
+        color: '#A9B5DF',
         border: 'none',
         borderRadius: '5px',
         cursor: 'pointer',
@@ -93,8 +101,8 @@ const styles = {
         fontSize: '18px',
         padding: '10px 15px',
         margin: '10px',
-        background: '#dc3545', // 🔴 Red for logout
-        color: 'white',
+        background: '#A9B5DF', // 🔴 Red for logout
+        color: '#2D336B',
         border: 'none',
         borderRadius: '5px',
         cursor: 'pointer',

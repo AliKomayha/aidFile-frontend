@@ -7,6 +7,7 @@ import './App.css'
 //import Navbar from './components/Navbar';
 
 import Beneficiaries from './components/Beneficiaries';
+import Beneficiary from './components/Beneficiary';
 import AidDistribution from './components/AidDistribution';
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
                 <Route path="*" element={<Login setToken={setToken} />} />
             ) : (
                 <>
-                    <Route path="/" element={<Beneficiaries />} />
+                    <Route path="/beneficiaries" element={<Beneficiaries />} />
                     <Route path="/aid-distributions" element={<AidDistribution />} />
+                    <Route path="/beneficiary/:id" element={<Beneficiary />} />
                 </>
             )}
         </Routes>

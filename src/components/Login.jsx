@@ -24,7 +24,7 @@ function Login({ setToken }) {
         if (response.ok) {
             localStorage.setItem('auth_token', data.token);
             setToken(data.token);
-            navigate('/');
+            navigate('/Beneficiaries');
         } else {
             alert("خطأ في تسجيل الدخول");
         }
