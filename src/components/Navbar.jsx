@@ -39,7 +39,7 @@ function Navbar({setToken}) {
             <ul style={styles.navList}>
             <li><button style={styles.button} onClick={() => navigate('/aid-distributions')}>تقديم المساعدات</button></li> 
             <li><button style={styles.button} onClick={() => navigate('/beneficiaries')}>المستفيدون</button></li>
-            <li><button style={styles.button}>Button</button></li>
+            <li><button style={styles.button} onClick={() => navigate('/new-beneficiary')}>إضافة مستفيد</button></li>
             <li><button style={styles.button}>Button</button></li>
             <li><button style={styles.logoutButton} onClick={handleLogout}>تسجيل الخروج</button></li>
             </ul>

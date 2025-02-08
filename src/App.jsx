@@ -9,6 +9,7 @@ import './App.css'
 import Beneficiaries from './components/Beneficiaries';
 import Beneficiary from './components/Beneficiary';
 import AidDistribution from './components/AidDistribution';
+import NewBeneficiary from './components/NewBeneficiary';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('auth_token') || '');
@@ -24,6 +25,7 @@ function App() {
                 <>
                     <Route path="/beneficiaries" element={<Beneficiaries />} />
                     <Route path="/aid-distributions" element={<AidDistribution />} />
+                    <Route path="/new-beneficiary" element={<NewBeneficiary />} />
                     <Route path="/beneficiary/:id" element={<Beneficiary />} />
                 </>
             )}

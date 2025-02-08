@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { baseUrl } from "../config";
 function Beneficiary() {
 
-    // const baseUrl = 'http://192.168.1.121:8001' ;
+    
     const { id } = useParams();
 
     const [beneficiary, setBeneficiary] = useState([]);

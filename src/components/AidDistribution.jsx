@@ -81,7 +81,6 @@ function AidDistribution() {
                     ))}
                 </select>
 
-                {/* <input type="number" value={aidId} onChange={(e) => setAidId(e.target.value)} placeholder="نوع المساعدة" required /> */}
                 <input type="number" value={unitValue} onChange={(e) => setUnitValue(e.target.value)} placeholder="قيمة الوحدة" required />
                 <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="الكمية" required />
                 <button type="submit">توزيع المساعدة</button>
