@@ -2,6 +2,8 @@ import { use } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { token } from 'react';
+import { baseUrl } from "../config";
+
 
 function Navbar({setToken}) {
 
@@ -11,7 +13,7 @@ function Navbar({setToken}) {
     // to be logged out  15|uO8Fa7y7wMZpwm7z5qdjYyTZMQbjDLTgZPWnkWWL028dd2c9
     try{
         const token = localStorage.getItem('auth_token');
-        const response = await fetch('http://192.168.1.121:8001/api/logout', {
+        const response = await fetch(`${baseUrl}/api/logout`, {
             method: 'POST',
             headers: {
             'Authorization': `Bearer ${token}`

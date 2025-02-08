@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from "../config";
 
 function Login({ setToken }) {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    //const baseUrl = 'http://localhost:8001' ;
+   
     
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try{
-        const response = await fetch('http://192.168.1.121:8001/api/login', {
+        const response = await fetch(`${baseUrl}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, password })

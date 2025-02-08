@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../config';
 
 function Beneficiaries() {
-    const baseUrl = 'http://localhost:8001' ;
+    
     const navigate = useNavigate();
 
     const [beneficiaries, setBeneficiaries] = useState([]);
     const token = localStorage.getItem('auth_token');
 
     useEffect(() => {
-        fetch( 'http://localhost:8001/api/beneficiaries', {
+        fetch( `${baseUrl}/api/beneficiaries`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(response => response.json())
