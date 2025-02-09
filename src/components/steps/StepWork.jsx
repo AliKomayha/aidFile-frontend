@@ -6,6 +6,9 @@ function StepWork({ nextStep, prevStep, setBeneficiaryData }){
     const [work, setWork] = useState({
 
         // Add the work fields here
+        job_type:"",
+        contract_type:"",
+        monthly_income:"",
 
     });
 
@@ -24,6 +27,27 @@ function StepWork({ nextStep, prevStep, setBeneficiaryData }){
         <div>
             <h2>العمل</h2>
               {/* Add the Work form here */}
+
+            <table lang="ar" dir="rtl">
+                <tr>
+                    <th>نوع العمل:</th>
+                    <th><input type="text" name="job_type" value={work.job_type} onChange={handleChange} required /></th>
+                    <th>نوع العقد:</th>
+                    <th>
+                    <label>
+                            <input type="radio" name="contract_type" value="مثبّت" onChange={handleChange} required /> مثبّت
+                        </label>
+                        <label>
+                            <input type="radio" name="contract_type" value="متعاقد" onChange={handleChange} required /> متعاقد
+                        </label>
+                        <label>
+                            <input type="radio" name="contract_type" value="مياوم" onChange={handleChange} required /> مياوم
+                        </label>
+                    </th>
+                    <th>الدخل الشهري:</th>
+                    <th><input type="text" name="monthly_income" value={work.monthly_income} onChange={handleChange} required /></th>
+                </tr>
+            </table>
             
             <button onClick={prevStep}>السابق</button>
             <button onClick={handleNext}>التالي</button>    

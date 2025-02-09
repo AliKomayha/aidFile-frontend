@@ -5,7 +5,10 @@ function StepHousing({ nextStep, prevStep, setBeneficiaryData }){
 
     const [housing, setHousing] = useState({
 
-
+        city:"",
+        street:"",
+        building:"",
+        nature_of_housing:"",
 
     });
 
@@ -24,7 +27,28 @@ function StepHousing({ nextStep, prevStep, setBeneficiaryData }){
         <div>
             <h2>السكن</h2>
               {/* Add the Housing form here */}
-            
+            <table lang="ar" dir="rtl">
+                <tr>
+                    <th>مدينة / بلدة:</th>
+                    <th><input type="text" name="city" value={housing.city} onChange={handleChange} required /></th>
+                    <th>شارع / حي:</th>
+                    <th><input type="text" name="street" value={housing.street} onChange={handleChange} required /></th>
+                    <th>بناية / طابق / جهة:</th>
+                    <th><input type="text" name="building" value={housing.building} onChange={handleChange} required /></th>
+                    <th>طبيعة الإشغال:</th>
+                    <th>
+                    <label>
+                            <input type="radio" name="nature_of_housing" value="ملك" onChange={handleChange} required /> ملك
+                        </label>
+                        <label>
+                            <input type="radio" name="nature_of_housing" value="إيجار" onChange={handleChange} required /> إيجار
+                        </label>
+                        <label>
+                            <input type="radio" name="nature_of_housing" value="إعارة" onChange={handleChange} required /> إعارة
+                        </label>
+                    </th>
+                </tr>
+            </table>
             <button onClick={prevStep}>السابق</button>
             <button onClick={handleNext}>التالي</button>    
         </div>

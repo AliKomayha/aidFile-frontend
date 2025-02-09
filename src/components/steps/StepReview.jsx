@@ -16,7 +16,8 @@ function StepReview({ prevStep, beneficiaryData }) {
     return (
         <div>
             <h3>مراجعة البيانات</h3>
-            {/* <pre>{JSON.stringify(beneficiaryData, null, 2)}</pre> */}
+            <pre>{JSON.stringify(beneficiaryData, null, 2)}</pre>
+            
 
             <button onClick={prevStep}>السابق</button>
             <button onClick={handleSubmit}>إرسال البيانات</button>
