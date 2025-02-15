@@ -19,12 +19,12 @@ function NewBeneficiary() {
         <div>
             <h2>إضافة مستفيد جديد</h2>
 
-            {step === 1 && <StepBeneficiaryInfo nextStep={nextStep} setBeneficiaryData={setBeneficiaryData} />}
-            {step === 2 && <StepWork nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} />}
-            {step === 3 && <StepHousing nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} />}
-            {step === 4 && <StepProperties nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} />}
-            {step === 5 && <StepWives nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} />}
-            {step === 6 && <StepChildren nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} />}
+            {step === 1 && <StepBeneficiaryInfo nextStep={nextStep} setBeneficiaryData={setBeneficiaryData} beneficiaryData={beneficiaryData} />}
+            {step === 2 && <StepWork nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} beneficiaryData={beneficiaryData}/>}
+            {step === 3 && <StepHousing nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} beneficiaryData={beneficiaryData} />}
+            {step === 4 && <StepProperties nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} beneficiaryData={beneficiaryData}/>}
+            {step === 5 && <StepWives nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} beneficiaryData={beneficiaryData} />}
+            {step === 6 && <StepChildren nextStep={nextStep} prevStep={prevStep} setBeneficiaryData={setBeneficiaryData} beneficiaryData={beneficiaryData} />}
             {step === 7 && <StepReview prevStep={prevStep} beneficiaryData={beneficiaryData} />}
 
         </div>

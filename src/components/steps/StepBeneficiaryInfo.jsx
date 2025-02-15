@@ -2,38 +2,45 @@ import { useState } from "react";
 import './styles.css';
 
 
-function StepBeneficiaryInfo({ nextStep, setBeneficiaryData }){
 
-    const [beneficiary, setBeneficiary] = useState({
-        name: '',
-        father_name: '',
-        grandfather_name:'',
-        lastname: '',
-        date_of_birth: '',
-        mothers_name: '',
-        social_status: '',
-        family_situation: '',
-        health_status: '',
-        number_place_of_registration: '',
-        nationality: '',
-        doctrine: '',
-        guarantor: '',
-        political_affiliation: '',
-        lineage: '',
-        academic_level: '',
-        blood_type: '',
-        religious_commitment: '',
-        phone_number: '',
-        second_phone: '',
+const StepBeneficiaryInfo =({ nextStep, setBeneficiaryData, beneficiaryData }) => {
+    const [beneficiary, setBeneficiary] = useState(
+        beneficiaryData?.beneficiary || {
+            name: '',
+            father_name: '',
+            grandfather_name:'',
+            lastname: '',
+            date_of_birth: '',
+            mothers_name: '',
+            social_status: '',
+            family_situation: '',
+            health_status: '',
+            number_place_of_registration: '',
+            nationality: '',
+            doctrine: '',
+            guarantor: '',
+            political_affiliation: '',
+            lineage: '',
+            academic_level: '',
+            blood_type: '',
+            religious_commitment: '',
+            phone_number: '',
+            second_phone: '',
+            }
 
-    });
+    );
 
     const handleChange = (e) =>{
         setBeneficiary({ ...beneficiary, [e.target.name]: e.target.value });
     };
+    
 
     const handleNext = () => {
-        setBeneficiaryData(prevData => ({ ...prevData, ...beneficiary }));
+        setBeneficiaryData(prevData => ({
+            ...prevData,
+            //beneficiaryInfo: beneficiary
+            beneficiary: beneficiary
+        }));
         nextStep();
     };
 
@@ -41,6 +48,7 @@ function StepBeneficiaryInfo({ nextStep, setBeneficiaryData }){
         <div>
             {/*  Add the beneficiary form here */}
             <table lang="ar" dir="rtl">
+                <tbody>
     <tr>
         <th>الاسم:</th>
         <th><input type="text" name="name" value={beneficiary.name} onChange={handleChange} required /></th>
@@ -101,6 +109,7 @@ function StepBeneficiaryInfo({ nextStep, setBeneficiaryData }){
         <th>هاتف ثابت:</th>
         <th><input type="text" name="second_phone" value={beneficiary.second_phone} onChange={handleChange} required /></th>
     </tr>
+    </tbody>
 </table>
 
 

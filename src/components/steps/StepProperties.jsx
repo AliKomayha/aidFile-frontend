@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 
-function StepProperties({ nextStep, prevStep, setBeneficiaryData }){
+function StepProperties({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
 
-    const [properties, setProperties] = useState([]);
+    const [properties, setProperties] = useState(beneficiaryData?.properties || []);
 
     const addProperty = () => {
         // Add a new property to the Properties array
@@ -17,7 +17,10 @@ function StepProperties({ nextStep, prevStep, setBeneficiaryData }){
     };
 
     const handleNext = () => {
-        setBeneficiaryData(prevData => ({ ...prevData, ...properties }));
+        setBeneficiaryData(prevData => ({
+            ...prevData,
+            properties: properties
+        }));
         nextStep();
     };
 

@@ -1,15 +1,16 @@
 import { useState } from "react";
 
 
-function StepWork({ nextStep, prevStep, setBeneficiaryData }){
+function StepWork({ nextStep, prevStep, setBeneficiaryData, beneficiaryData}){
 
-    const [work, setWork] = useState({
-
+    const [work, setWork] = useState(
+        beneficiaryData?.work || {
+      
         // Add the work fields here
         job_type:"",
         contract_type:"",
         monthly_income:"",
-
+        
     });
 
    
@@ -19,7 +20,10 @@ function StepWork({ nextStep, prevStep, setBeneficiaryData }){
     };
 
     const handleNext = () => {
-        setBeneficiaryData(prevData => ({ ...prevData, ...work }));
+        setBeneficiaryData(prevData => ({
+            ...prevData,
+            work: work
+        }));
         nextStep();
     };
 

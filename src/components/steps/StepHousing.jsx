@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 
-function StepHousing({ nextStep, prevStep, setBeneficiaryData }){
+function StepHousing({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
 
-    const [housing, setHousing] = useState({
+    const [housing, setHousing] = useState(
+        beneficiaryData?.housing || {
 
         city:"",
         street:"",
@@ -19,7 +20,10 @@ function StepHousing({ nextStep, prevStep, setBeneficiaryData }){
     };
 
     const handleNext = () => {
-        setBeneficiaryData(prevData => ({ ...prevData, ...housing }));
+        setBeneficiaryData(prevData => ({
+            ...prevData,
+            housing: housing
+        }));
         nextStep();
     };
 

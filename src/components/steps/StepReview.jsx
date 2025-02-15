@@ -5,13 +5,27 @@ function StepReview({ prevStep, beneficiaryData }) {
 
     const token = localStorage.getItem('auth_token');
 
-    const handleSubmit = async (e) => {
-
-        // alot to do here
-        // creating missing controllers
-        // creating responsible function
-        // creating responsible route
-    }
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch(`${baseUrl}/api/beneficiaries`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(beneficiaryData)
+            });
+    
+            if (response.ok) {
+                alert("تم تسجيل المستفيد بنجاح!");
+            } else {
+                alert("حدث خطأ أثناء التسجيل!");
+            }
+        } catch (error) {
+            console.error("Error submitting data:", error);
+        }
+    };
+    
 
     return (
         <div>

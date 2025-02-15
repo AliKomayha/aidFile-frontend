@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 
-function StepChildren({ nextStep, prevStep, setBeneficiaryData }){
+function StepChildren({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
 
-    const [children, setChildren] = useState([]);
+    const [children, setChildren] = useState(beneficiaryData?.children || []);
 
     const addChild = () => {
         
@@ -34,7 +34,10 @@ function StepChildren({ nextStep, prevStep, setBeneficiaryData }){
     };
 
     const handleNext = () => {
-        setBeneficiaryData(prevData => ({ ...prevData, ...children }));
+        setBeneficiaryData(prevData => ({
+            ...prevData,
+            children: children
+        }));
         nextStep();
     };
 

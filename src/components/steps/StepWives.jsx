@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 
-function StepWives({ nextStep, prevStep, setBeneficiaryData }){
+function StepWives({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
 
-    const [wives, setWives] = useState([]);
+    const [wives, setWives] = useState(beneficiaryData?.wives || []);
 
     const addWife = () => {
         // Add a new wife to the wives array
@@ -33,7 +33,10 @@ function StepWives({ nextStep, prevStep, setBeneficiaryData }){
     };
 
     const handleNext = () => {
-        setBeneficiaryData(prevData => ({ ...prevData, ...wives }));
+        setBeneficiaryData(prevData => ({
+            ...prevData,
+            wives: wives
+        }));
         nextStep();
     };
 
