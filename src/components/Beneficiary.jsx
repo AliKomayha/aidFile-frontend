@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { baseUrl } from "../config";
 function Beneficiary() {
 
     
     const { id } = useParams();
+    const navigate = useNavigate();
 
-    const [beneficiary, setBeneficiary] = useState([]);
-    const token = localStorage.getItem('auth_token');
+    const [beneficiary, setBeneficiary] = useState(null);
+    const token = localStorage.getItem('auth_token');   
   
-
+    
      useEffect(() => {
         fetch(`${baseUrl}/api/beneficiaries/${id}`, {
             method: 'GET',
@@ -47,6 +48,8 @@ function Beneficiary() {
                     </tr>
                 </tbody>
             </table>
+              {/* ✅ Button to Navigate to Update Page */}
+              <button onClick={() => navigate(`/update-beneficiary/${id}`)}>✏️ تحديث البيانات</button>
         </div>
     );
 }

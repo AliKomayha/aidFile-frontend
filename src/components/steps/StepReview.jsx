@@ -66,6 +66,8 @@ function StepReview({ prevStep, beneficiaryData }) {
         setLoading(true);
         setMessage("");
 
+        console.log("🛠️ Sending Data:", JSON.stringify(beneficiaryData, null, 2));
+
         try {
             const response = await fetch(`${baseUrl}/api/beneficiaries`, {
                 method: "POST",
@@ -79,9 +81,12 @@ function StepReview({ prevStep, beneficiaryData }) {
             if (response.ok) {
                 setMessage("✅ تم تسجيل المستفيد بنجاح!");
             } else {
+                const errorResult = await response.json();
+                console.error("🛠️ API Error:", errorResult);
                 setMessage("❌ حدث خطأ أثناء التسجيل!");
             }
         } catch (error) {
+            console.error("🛠️ Network/Server Error:", error);
             setMessage("⚠️ فشل الاتصال بالخادم.");
         }
 

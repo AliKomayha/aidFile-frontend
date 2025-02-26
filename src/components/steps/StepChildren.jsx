@@ -27,9 +27,17 @@ function StepChildren({ nextStep, prevStep, setBeneficiaryData, beneficiaryData 
 
     };
 
-    const handleChange = (e, index) =>{
+    
+    const handleChange = (e, index, field = null) => {
+        const { name, value, type } = e.target;
         const updatedChildren = [...children];
-        updatedChildren[index][e.target.name] = e.target.value;
+    
+        if (type === "radio") {
+            updatedChildren[index] = { ...updatedChildren[index], [field]: value };
+        } else {
+            updatedChildren[index][name] = value;
+        }
+    
         setChildren(updatedChildren);
     };
 
@@ -59,7 +67,7 @@ function StepChildren({ nextStep, prevStep, setBeneficiaryData, beneficiaryData 
                                 <th>مكان الولادة:</th>
                                 <th><input type="text" name="place_of_birth" value={child.place_of_birth} onChange={(e) => handleChange(e, index)} required /></th>
                                 <th>تاريخ الولادة:</th>
-                                <th><input type="text" name="date_of_birth" value={child.date_of_birth} onChange={(e) => handleChange(e, index)} required /></th>
+                                <th><input type="date" name="date_of_birth" value={child.date_of_birth} onChange={(e) => handleChange(e, index)} required /></th>
                             </tr>
                             <tr>
                                 <th>الجنس:</th>
@@ -67,19 +75,19 @@ function StepChildren({ nextStep, prevStep, setBeneficiaryData, beneficiaryData 
                                 <th>مقيم في المنزل:</th>
                                 <th>
                                     <label>
-                                        <input type="radio" name="resident_in_house" value="نعم" checked={child.resident_in_house === "نعم"} onChange={(e) => handleChange(e, index)} required /> نعم
+                                        <input type="radio" name={`resident_in_house_${index}`}  value="نعم" checked={child.resident_in_house === "نعم"} onChange={(e) => handleChange(e, index, "resident_in_house")} required /> نعم
                                     </label>
                                     <label>
-                                        <input type="radio" name="resident_in_house" value="كلا" checked={child.resident_in_house === "كلا"} onChange={(e) => handleChange(e, index)} required /> كلا
+                                        <input type="radio" name={`resident_in_house_${index}`}  value="كلا" checked={child.resident_in_house === "كلا"} onChange={(e) => handleChange(e, index, "resident_in_house")} required /> كلا
                                     </label>
                                 </th>
                                 <th>الالتزام الديني:</th>
                                 <th>
                                     <label>
-                                        <input type="radio" name="religious_commitment" value="نعم" checked={child.religious_commitment === "نعم"} onChange={(e) => handleChange(e, index)} required /> نعم
+                                        <input type="radio" name={`religious_commitment_${index}`} value="نعم" checked={child.religious_commitment === "نعم"} onChange={(e) => handleChange(e, index, "religious_commitment")} required /> نعم
                                     </label>
                                     <label>
-                                        <input type="radio" name="religious_commitment" value="كلا" checked={child.religious_commitment === "كلا"} onChange={(e) => handleChange(e, index)} required /> كلا
+                                        <input type="radio" name={`religious_commitment_${index}`} value="كلا" checked={child.religious_commitment === "كلا"} onChange={(e) => handleChange(e, index, "religious_commitment")} required /> كلا
                                     </label>
                                 </th>
                             </tr>
@@ -89,10 +97,10 @@ function StepChildren({ nextStep, prevStep, setBeneficiaryData, beneficiaryData 
                                 <th>يواصل الدراسة:</th>
                                 <th>
                                     <label>
-                                        <input type="radio" name="continues_studying" value="نعم" checked={child.continues_studying === "نعم"} onChange={(e) => handleChange(e, index)} required /> نعم
+                                        <input type="radio" name={`continues_studying_${index}`} value="نعم" checked={child.continues_studying === "نعم"} onChange={(e) => handleChange(e, index, "continues_studying")} required /> نعم
                                     </label>
                                     <label>
-                                        <input type="radio" name="continues_studying" value="كلا" checked={child.continues_studying === "كلا"} onChange={(e) => handleChange(e, index)} required /> كلا
+                                        <input type="radio" name={`continues_studying_${index}`} value="كلا" checked={child.continues_studying === "كلا"} onChange={(e) => handleChange(e, index, "continues_studying")} required /> كلا
                                     </label>
                                 </th>
                                 <th>القسط السنوي:</th>

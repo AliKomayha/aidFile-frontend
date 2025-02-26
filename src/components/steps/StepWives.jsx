@@ -11,7 +11,7 @@ function StepWives({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
             full_name:"",
             place_of_birth:"",
             date_of_birth:"",
-             religious_commitment: "",
+            religious_commitment: "",
             doctrine: "",
             lineage: "",
             academic_level: "",
@@ -21,7 +21,7 @@ function StepWives({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
             guarantor: "",
             blood_type: "",
             property_type: "",
-            property_value: "",     
+            property_value: ""
 
          }]);
     };
@@ -32,14 +32,23 @@ function StepWives({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
         setWives(updatedWives);
     };
 
+    // const handleNext = () => {
+    //     setBeneficiaryData(prevData => ({
+    //         ...prevData,
+    //         wives: wives
+    //     }));
+    //     nextStep();
+    // };
+
     const handleNext = () => {
+        console.log("🛠️ Wives Data Before Submitting:", wives); // ✅ Debug wives array
+    
         setBeneficiaryData(prevData => ({
             ...prevData,
-            wives: wives
+            wives: wives.length > 0 ? wives : [] // ✅ Ensure it's always an array
         }));
         nextStep();
     };
-
     return(
         <div>
             <h2>الزوجات</h2>
@@ -51,11 +60,11 @@ function StepWives({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
                         <tbody>
                             <tr>
                                 <th>الاسم:</th>
-                                <th><input type="text" name="name" value={wife.name} onChange={(e) => handleChange(e, index)} required /></th>
+                                <th><input type="text" name="full_name" value={wife.full_name} onChange={(e) => handleChange(e, index)} required /></th>
                                 <th>مكان الولادة:</th>
                                 <th><input type="text" name="place_of_birth" value={wife.place_of_birth} onChange={(e) => handleChange(e, index)} required /></th>
                                 <th>تاريخ الولادة:</th>
-                                <th><input type="text" name="date_of_birth" value={wife.date_of_birth} onChange={(e) => handleChange(e, index)} required /></th>
+                                <th><input type="date" name="date_of_birth" value={wife.date_of_birth} onChange={(e) => handleChange(e, index)} required /></th>
                             </tr>
                             <tr>
                                 <th>الالتزام الديني:</th>

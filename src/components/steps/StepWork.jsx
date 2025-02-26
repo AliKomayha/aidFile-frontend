@@ -33,6 +33,7 @@ function StepWork({ nextStep, prevStep, setBeneficiaryData, beneficiaryData}){
               {/* Add the Work form here */}
 
             <table lang="ar" dir="rtl">
+                <tbody>
                 <tr>
                     <th>نوع العمل:</th>
                     <th><input type="text" name="job_type" value={work.job_type} onChange={handleChange} required /></th>
@@ -51,6 +52,7 @@ function StepWork({ nextStep, prevStep, setBeneficiaryData, beneficiaryData}){
                     <th>الدخل الشهري:</th>
                     <th><input type="text" name="monthly_income" value={work.monthly_income} onChange={handleChange} required /></th>
                 </tr>
+                </tbody>
             </table>
             
             <button onClick={prevStep}>السابق</button>
