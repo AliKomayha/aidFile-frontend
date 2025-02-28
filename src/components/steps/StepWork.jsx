@@ -40,13 +40,13 @@ function StepWork({ nextStep, prevStep, setBeneficiaryData, beneficiaryData}){
                     <th>نوع العقد:</th>
                     <th>
                     <label>
-                            <input type="radio" name="contract_type" value="مثبّت" onChange={handleChange} required /> مثبّت
+                            <input type="radio" name="contract_type" value="مثبّت" checked={work.contract_type === "مثبّت"} onChange={handleChange} required /> مثبّت
                         </label>
                         <label>
-                            <input type="radio" name="contract_type" value="متعاقد" onChange={handleChange} required /> متعاقد
+                            <input type="radio" name="contract_type" value="متعاقد" checked={work.contract_type === "متعاقد"} onChange={handleChange} required /> متعاقد
                         </label>
                         <label>
-                            <input type="radio" name="contract_type" value="مياوم" onChange={handleChange} required /> مياوم
+                            <input type="radio" name="contract_type" value="مياوم" checked={work.contract_type === "مياوم"} onChange={handleChange} required /> مياوم
                         </label>
                     </th>
                     <th>الدخل الشهري:</th>

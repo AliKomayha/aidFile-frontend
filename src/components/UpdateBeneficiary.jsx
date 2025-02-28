@@ -61,25 +61,143 @@ function UpdateBeneficiary(){
         } else if (section === "housing") {
             setHousing({ ...housing, [name]: value });
         }
+
     };
 
 
     // ✅ Handle Dynamic Fields (Properties, Wives, Children)
-    const handleArrayChange = (e, index, arrayName) => {
+    // const handleArrayChange = (e, index, arrayName) => {
+    //     const updatedArray = [...(arrayName === "properties" ? properties : arrayName === "wives" ? wives : children)];
+    //     updatedArray[index][e.target.name] = e.target.value;
+    //     if (arrayName === "properties") setProperties(updatedArray);
+    //     if (arrayName === "wives") setWives(updatedArray);
+    //     if (arrayName === "children") setChildren(updatedArray);
+    // };
+
+    const handleArrayChange = (e, index, arrayName, field = null) => {
+        const { name, value, type } = e.target;
         const updatedArray = [...(arrayName === "properties" ? properties : arrayName === "wives" ? wives : children)];
-        updatedArray[index][e.target.name] = e.target.value;
+    
+        if (type === "radio") {
+            updatedArray[index] = { ...updatedArray[index], [field]: value };
+        } else {
+            updatedArray[index][name] = value;
+        }
+    
         if (arrayName === "properties") setProperties(updatedArray);
         if (arrayName === "wives") setWives(updatedArray);
         if (arrayName === "children") setChildren(updatedArray);
     };
-
     const addProperty = () => setProperties([...properties, { property_type: "", property_value: "" }]);
     const addWife = () => setWives([...wives, { full_name: "", date_of_birth: "" }]);
     const addChild = () => setChildren([...children, { name: "", date_of_birth: "" }]);
 
 
      // ✅ Handle Update Submission (`PUT` Request)
+    // const handleUpdate = async () => {
+
+    //     console.log("🛠️ Sending Data:", JSON.stringify(beneficiary, work, housing, properties, wives, children , null, 2));
+
+    //     try {
+    //         const response = await fetch(`${baseUrl}/api/beneficiaries/${id}`, {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "Authorization": `Bearer ${token}`
+    //             },
+    //             body: JSON.stringify({ beneficiary, work, housing, properties, wives, children }),
+    //         });
+
+    //         if (response.ok) {
+    //             setMessage("✅ تم تحديث البيانات بنجاح!");
+    //             setTimeout(() => navigate(`/beneficiaries/${id}`), 2000);
+    //         } else {
+    //             const errorResult = await response.json();
+    //             setMessage(`❌ فشل التحديث: ${errorResult.message}`);
+    //         }
+    //     } catch (error) {
+    //         setMessage("⚠️ فشل الاتصال بالخادم.");
+    //     }
+    // };
+
     const handleUpdate = async () => {
+        const formattedData = {
+            beneficiary: {
+                name: beneficiary.name,
+                father_name: beneficiary.father_name,
+                grandfather_name: beneficiary.grandfather_name,
+                lastname: beneficiary.lastname,
+                date_of_birth: beneficiary.date_of_birth,
+                mothers_name: beneficiary.mothers_name,
+                social_status: beneficiary.social_status,
+                family_situation: beneficiary.family_situation,
+                health_status: beneficiary.health_status,
+                number_place_of_registration: beneficiary.number_place_of_registration,
+                nationality: beneficiary.nationality,
+                doctrine: beneficiary.doctrine,
+                guarantor: beneficiary.guarantor,
+                political_affiliation: beneficiary.political_affiliation,
+                lineage: beneficiary.lineage,
+                academic_level: beneficiary.academic_level,
+                blood_type: beneficiary.blood_type,
+                religious_commitment: beneficiary.religious_commitment,
+                phone_number: beneficiary.phone_number,
+                second_phone: beneficiary.second_phone,
+                family_status: beneficiary.family_status,
+                comments: beneficiary.comments
+            },
+            work: work ? {
+                job_type: work.job_type,
+                contract_type: work.contract_type,
+                monthly_income: work.monthly_income
+            } : null,
+            housing: housing ? {
+                city: housing.city,
+                street: housing.street,
+                building: housing.building,
+                nature_of_housing: housing.nature_of_housing
+            } : null,
+            properties: properties.map(p => ({
+                property_type: p.property_type,
+                property_value: p.property_value
+            })),
+            wives: wives.map(w => ({
+                full_name: w.full_name,
+                place_of_birth: w.place_of_birth,
+                date_of_birth: w.date_of_birth,
+                religious_commitment: w.religious_commitment,
+                doctrine: w.doctrine,
+                lineage: w.lineage,
+                academic_level: w.academic_level,
+                type_of_work: w.type_of_work,
+                monthly_income: w.monthly_income,
+                health_status: w.health_status,
+                guarantor: w.guarantor,
+                blood_type: w.blood_type,
+                property_type: w.property_type,
+                property_value: w.property_value
+            })),
+            children: children.map(c => ({
+                name: c.name,
+                place_of_birth: c.place_of_birth,
+                date_of_birth: c.date_of_birth,
+                religious_commitment: c.religious_commitment,
+                sex: c.sex,
+                resident_in_house: c.resident_in_house,
+                academic_level: c.academic_level,
+                continues_studying: c.continues_studying,
+                yearly_installment: c.yearly_installment,
+                type_of_work: c.type_of_work,
+                monthly_income: c.monthly_income,
+                monthly_contribution: c.monthly_contribution,
+                health_status: c.health_status,
+                guarantor: c.guarantor,
+                blood_type: c.blood_type
+            }))
+        };
+    
+        console.log("🛠️ Sending Data:", JSON.stringify(formattedData, null, 2));
+    
         try {
             const response = await fetch(`${baseUrl}/api/beneficiaries/${id}`, {
                 method: "PUT",
@@ -87,9 +205,9 @@ function UpdateBeneficiary(){
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ beneficiary, work, housing, properties, wives, children }),
+                body: JSON.stringify(formattedData),
             });
-
+    
             if (response.ok) {
                 setMessage("✅ تم تحديث البيانات بنجاح!");
                 setTimeout(() => navigate(`/beneficiaries/${id}`), 2000);
@@ -101,6 +219,7 @@ function UpdateBeneficiary(){
             setMessage("⚠️ فشل الاتصال بالخادم.");
         }
     };
+    
 
     if (!beneficiary) {
         return <p>🔄 جاري تحميل البيانات...</p>; // Prevent rendering empty form
@@ -225,10 +344,10 @@ function UpdateBeneficiary(){
                 <th><input type="text" name="political_affiliation" value={beneficiary.political_affiliation} onChange={handleChange} required /></th>
                 <th>الالتزام الديني:</th>
                 <th><label>
-                        <input type="radio" name="religious_commitment" value="نعم" onChange={handleChange} required /> نعم
+                        <input type="radio" name="religious_commitment" value="نعم" checked={beneficiary.religious_commitment === "نعم"} onChange={handleChange} required /> نعم
                     </label>
                     <label>
-                        <input type="radio" name="religious_commitment" value="كلا" onChange={handleChange} required /> كلا
+                        <input type="radio" name="religious_commitment" value="كلا" checked={beneficiary.religious_commitment === "كلا"} onChange={handleChange} required /> كلا
                     </label>
                 </th>
             </tr>
@@ -326,13 +445,13 @@ function UpdateBeneficiary(){
             <th>طبيعة الإشغال:</th>
             <th>
             <label>
-                    <input type="radio" name="nature_of_housing" value="ملك" onChange={handleChange} required /> ملك
+                    <input type="radio" name="nature_of_housing" value="ملك" checked={housing.nature_of_housing === "ملك"} onChange={handleChange} required /> ملك
                 </label>
                 <label>
-                    <input type="radio" name="nature_of_housing" value="إيجار" onChange={handleChange} required /> إيجار
+                    <input type="radio" name="nature_of_housing" value="إيجار" checked={housing.nature_of_housing === "إيجار"}  onChange={handleChange} required /> إيجار
                 </label>
                 <label>
-                    <input type="radio" name="nature_of_housing" value="إعارة" onChange={handleChange} required /> إعارة
+                    <input type="radio" name="nature_of_housing" value="إعارة" checked={housing.nature_of_housing === "إعارة"}  onChange={handleChange} required /> إعارة
                 </label>
             </th>
         </tr>
@@ -443,19 +562,20 @@ function UpdateBeneficiary(){
                             <th>مقيم في المنزل:</th>
                             <th>
                                 <label>
-                                    <input type="radio" name="resident_in_house" value="نعم" checked={child.resident_in_house === "نعم"} onChange={(e) => handleChange(e, index)} required /> نعم
+                                    <input type="radio" name={`resident_in_house_${index}`}  value="نعم" checked={child.resident_in_house === "نعم"} onChange={(e) => handleArrayChange(e, index, "children", "resident_in_house")} required /> نعم
+
                                 </label>
                                 <label>
-                                    <input type="radio" name="resident_in_house" value="كلا" checked={child.resident_in_house === "كلا"} onChange={(e) => handleChange(e, index)} required /> كلا
+                                    <input type="radio" name={`resident_in_house_${index}`}  value="كلا" checked={child.resident_in_house === "كلا"} onChange={(e) => handleArrayChange(e, index, "children", "resident_in_house")} required /> كلا
                                 </label>
                             </th>
                             <th>الالتزام الديني:</th>
                             <th>
                                 <label>
-                                    <input type="radio" name="religious_commitment" value="نعم" checked={child.religious_commitment === "نعم"} onChange={(e) => handleChange(e, index)} required /> نعم
+                                    <input type="radio" name={`religious_commitment_${index}`} value="نعم" checked={child.religious_commitment === "نعم"} onChange={(e) => handleArrayChange(e, index, "children", "religious_commitment")} required /> نعم
                                 </label>
                                 <label>
-                                    <input type="radio" name="religious_commitment" value="كلا" checked={child.religious_commitment === "كلا"} onChange={(e) => handleChange(e, index)} required /> كلا
+                                    <input type="radio" name={`religious_commitment_${index}`} value="كلا" checked={child.religious_commitment === "كلا"} onChange={(e) => handleArrayChange(e, index, "children", "religious_commitment")} required /> كلا
                                 </label>
                             </th>
                         </tr>
@@ -465,10 +585,10 @@ function UpdateBeneficiary(){
                             <th>يواصل الدراسة:</th>
                             <th>
                                 <label>
-                                    <input type="radio" name="continues_studying" value="نعم" checked={child.continues_studying === "نعم"} onChange={(e) => handleChange(e, index)} required /> نعم
+                                    <input type="radio" name={`continues_studying_${index}`} value="نعم" checked={child.continues_studying === "نعم"} onChange={(e) => handleArrayChange(e, index, "children", "continues_studying")} required /> نعم
                                 </label>
                                 <label>
-                                    <input type="radio" name="continues_studying" value="كلا" checked={child.continues_studying === "كلا"} onChange={(e) => handleChange(e, index)} required /> كلا
+                                    <input type="radio" name={`continues_studying_${index}`}  value="كلا" checked={child.continues_studying === "كلا"} onChange={(e) => handleArrayChange(e, index, "children", "continues_studying")} required /> كلا
                                 </label>
                             </th>
                             <th>القسط السنوي:</th>

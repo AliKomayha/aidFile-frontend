@@ -62,13 +62,13 @@ function StepHousing({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }
                     <th>طبيعة الإشغال:</th>
                     <th>
                     <label>
-                            <input type="radio" name="nature_of_housing" value="ملك" onChange={handleChange} required /> ملك
+                            <input type="radio" name="nature_of_housing" value="ملك" checked={housing.nature_of_housing === "ملك"} onChange={handleChange} required /> ملك
                         </label>
                         <label>
-                            <input type="radio" name="nature_of_housing" value="إيجار" onChange={handleChange} required /> إيجار
+                            <input type="radio" name="nature_of_housing" value="إيجار" checked={housing.nature_of_housing === "إيجار"} onChange={handleChange} required /> إيجار
                         </label>
                         <label>
-                            <input type="radio" name="nature_of_housing" value="إعارة" onChange={handleChange} required /> إعارة
+                            <input type="radio" name="nature_of_housing" value="إعارة" checked={housing.nature_of_housing === "إعارة"} onChange={handleChange} required /> إعارة
                         </label>
                     </th>
                 </tr>

@@ -29,7 +29,7 @@ const StepBeneficiaryInfo =({ nextStep, setBeneficiaryData, beneficiaryData }) =
             family_status: '',
             comments: '',
             }
-
+            
     );
 
     const handleChange = (e) =>{
@@ -153,10 +153,10 @@ const StepBeneficiaryInfo =({ nextStep, setBeneficiaryData, beneficiaryData }) =
         <th><input type="text" name="political_affiliation" value={beneficiary.political_affiliation} onChange={handleChange} required /></th>
         <th>الالتزام الديني:</th>
         <th><label>
-                <input type="radio" name="religious_commitment" value="نعم" onChange={handleChange} required /> نعم
+                <input type="radio" name="religious_commitment" value="نعم" checked={beneficiary.religious_commitment === "نعم"} onChange={handleChange} required /> نعم
             </label>
             <label>
-                 <input type="radio" name="religious_commitment" value="كلا" onChange={handleChange} required /> كلا
+                 <input type="radio" name="religious_commitment" value="كلا" checked={beneficiary.religious_commitment === "كلا"} onChange={handleChange} required /> كلا
             </label>
         </th>
     </tr>
