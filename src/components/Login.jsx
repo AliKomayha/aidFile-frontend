@@ -25,6 +25,8 @@ function Login({ setToken }) {
         if (response.ok) {
             localStorage.setItem('auth_token', data.token);
             setToken(data.token);
+            localStorage.setItem('user_role', data.user.role);
+            
             navigate('/Beneficiaries');
         } else {
             alert("خطأ في تسجيل الدخول");

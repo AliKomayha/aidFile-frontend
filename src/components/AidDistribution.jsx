@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { baseUrl } from "../config";
+import * as XLSX from "xlsx";
 
 
 function AidDistribution(){
@@ -83,6 +84,28 @@ function AidDistribution(){
 
         setFilteredBeneficiaries(filtered);
     }, [filters, beneficiaries]);
+
+    //handle exporting 
+    const exportToExcel = () => {
+      const tableData = filteredBeneficiaries.map((b) => ({
+        " إجمالي المساعدات": b.total_aids ?? "-",
+        " تاريخ آخر مساعدة": b.last_aid_date ?? "-",
+        " رقم الهاتف": b.phone_number || "-",
+        " نوع العمل": b.job_type || "-",
+        " الحي": b.street || "-",
+        "وضع الأسرة": b.family_status || "-",
+        " اسم الأم": b.mothers_name || "-",
+        " الاسم الكامل": `${b.name} ${b.father_name} ${b.lastname}`,
+      }));
+
+      //const worksheet = XLSX.utils.json_to_sheet(filteredBeneficiaries);
+      const worksheet = XLSX.utils.json_to_sheet(tableData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Beneficiaries");
+
+      // Download the Excel file
+      XLSX.writeFile(workbook, "Beneficiaries.xlsx");
+    };
 
     // Handle checkbox selection
     const toggleSelectBeneficiary = (id) => {
@@ -181,7 +204,7 @@ function AidDistribution(){
             </th>
           </tr>
           <tr>
-          <th><button onClick={handleDistributeAid}>🚀 توزيع</button></th>
+          <th><button onClick={handleDistributeAid}>🚀 توزيع</button> <button onClick={exportToExcel}>📥 تصدير إلى Excel</button></th>
             <th><input type="number" value={unitValue} onChange={(e) => setUnitValue(e.target.value)} /> </th>
 
             <th>: القيمة</th>

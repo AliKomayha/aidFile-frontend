@@ -101,7 +101,7 @@ function Beneficiaries() {
       <table border="1" width="100%">
         <thead>
           <tr>
-            <th>✔️</th>
+            <th><button onClick={() => navigate('/stats')}>Stats</button></th>
             <th>رقم الهاتف</th>
             <th>الوضع الاجتماعي</th>
             <th>وضع العائلة</th>

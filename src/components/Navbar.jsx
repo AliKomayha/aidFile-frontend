@@ -3,16 +3,44 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { token } from 'react';
 import { baseUrl } from "../config";
+import { useEffect } from 'react';
 
 
 function Navbar({setToken}) {
 
     const navigate = useNavigate();
+    const token = localStorage.getItem('auth_token');
+
+     // Auto Logout Feature - 10 minutes of inactivity
+     useEffect(() => {
+        let timeout;
+
+        const resetTimer = () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                handleLogout();
+            }, 10 * 60 * 1000); // 10 minutes
+        };
+
+        // Reset timer on user activity
+        window.addEventListener("mousemove", resetTimer);
+        window.addEventListener("keydown", resetTimer);
+        window.addEventListener("click", resetTimer);
+        resetTimer(); // Start the timer initially
+
+        return () => {
+            clearTimeout(timeout);
+            window.removeEventListener("mousemove", resetTimer);
+            window.removeEventListener("keydown", resetTimer);
+            window.removeEventListener("click", resetTimer);
+        };
+    }, []); // Runs once when component mounts
+
 
     const handleLogout = async() => {
    
     try{
-        const token = localStorage.getItem('auth_token');
+        
         const response = await fetch(`${baseUrl}/api/logout`, {
             method: 'POST',
             headers: {
@@ -21,8 +49,9 @@ function Navbar({setToken}) {
         });
         if(response.ok){
             localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_role');
             setToken(null);
-            // navigate('/Login');
+            
         } else{
             alert(`logout failed`);
         }
@@ -40,7 +69,7 @@ function Navbar({setToken}) {
             <li><button style={styles.button} onClick={() => navigate('/aid-distributions')}>تقديم المساعدات</button></li> 
             <li><button style={styles.button} onClick={() => navigate('/beneficiaries')}>المستفيدون</button></li>
             <li><button style={styles.button} onClick={() => navigate('/new-beneficiary')}>إضافة مستفيد</button></li>
-            <li><button style={styles.button} onClick={() => navigate('/test')}>Button</button></li>
+            <li><button style={styles.button} onClick={() => navigate('/test')}>Users</button></li>
             <li><button style={styles.logoutButton} onClick={handleLogout}>تسجيل الخروج</button></li>
             </ul>
         </nav>
