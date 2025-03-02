@@ -12,7 +12,7 @@ function AidDistribution(){
     const [aids, setAids] = useState([]);
     const [selectedAid, setSelectedAid] = useState("");
     const [unitValue, setUnitValue] = useState("");
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState("1");
 
     const [filters, setFilters] = useState({
         search: "",
@@ -29,17 +29,29 @@ function AidDistribution(){
         headers: { "Authorization": `Bearer ${token}` }
         })
         .then(response => response.json())
-        
-        .then(data => {
-            
-            const enrichedData = data.map((b) => ({
+        .then(beneficiaryData => {
+          fetch(`${baseUrl}/api/aid-proc`, {
+              headers: { "Authorization": `Bearer ${token}` }
+          })
+          .then(response => response.json())
+          .then(statistics => {
+          
+            const enrichedData = beneficiaryData.map(b => {
+              const stats = statistics.find(s => s.id === b.id) || {};
+              return{
                 ...b,
                 job_type: b.work ? b.work.job_type : "غير متوفر",
                 street: b.housing ? b.housing.street : "غير متوفر",
-            }));
+                //total_aids: stats.total_aids || 0, // ✅ Store total aids received
+                total_aids: stats.total_aids !== undefined ? stats.total_aids : 0,
+                last_aid_date: stats.last_aid_date || "لم يستلم" // ✅ Store last aid received date
+              };
+            });
 
+            
             setBeneficiaries(enrichedData);
             setFilteredBeneficiaries(enrichedData);
+          });
         })
         .catch(error => console.error("Error fetching beneficiaries:", error));
 
@@ -98,7 +110,7 @@ function AidDistribution(){
     }));
 
     
-    console.log("🛠️ Sending Data:", JSON.stringify(payload, null, 2));
+   
 
     //
     const response = await fetch(`${baseUrl}/api/aid-distributions`, {
@@ -124,8 +136,10 @@ function AidDistribution(){
 
   return (
     <div>
-      <h2>توزيع المساعدات</h2>
-
+      
+      <br />
+      <br />
+      <br />  
       {/* Filters */}
       <input
         type="text"
@@ -148,43 +162,57 @@ function AidDistribution(){
         )}
       </select>
 
+      <br />
+        <h4> تقديم مساعدة</h4>
 
-      {/* Aid Details */}
-      <select onChange={(e) => setSelectedAid(e.target.value)}>
-          <option value="">🎁 نوع المساعدة</option>
-          {aids.map((aid) => (
-              <option key={aid.id} value={aid.id}>
-                  {aid.type}
-              </option>
-          ))}
-      </select>
+      <table>
+        <tbody>
+            <tr>
+            <th colSpan = "5">
+              {/* Aid Details */}
+              <select onChange={(e) => setSelectedAid(e.target.value)}>
+                  <option value="">🎁 نوع المساعدة</option>
+                    {aids.map((aid) => (
+                        <option key={aid.id} value={aid.id}>
+                            {aid.type}
+                        </option>
+                    ))}
+              </select>
+            </th>
+          </tr>
+          <tr>
+          <th><button onClick={handleDistributeAid}>🚀 توزيع</button></th>
+            <th><input type="number" value={unitValue} onChange={(e) => setUnitValue(e.target.value)} /> </th>
 
-      <input
-        type="number"
-        placeholder="💰 القيمة"
-        value={unitValue}
-        onChange={(e) => setUnitValue(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="🔢 الكمية"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
+            <th>: القيمة</th>
+          
+          
+              <th>
+                <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+              </th>
+              <th>: الكمية</th>
+
+              
+          </tr>  
+          
+        </tbody>
+      </table>
 
       {/* Beneficiaries List */}
       <table border="1" width="100%">
         <thead>
           <tr>
             <th>✔️</th>
-            <th>الاسم الكامل</th>
-            <th>اسم الأم</th>
-            <th>وضع الأسرة</th>
-            <th>الشارع</th>
-            <th>نوع العمل</th>
-            <th>وضع العائلة</th>
-            <th>الوضع الاجتماعي</th>
+            <th>📦 إجمالي المساعدات</th>
+            <th>📅 تاريخ آخر مساعدة</th> 
             <th>رقم الهاتف</th>
+            <th>الوضع الاجتماعي</th>
+            <th>الوضع العائلي</th>
+            <th>نوع العمل</th>
+            <th>الحي</th>
+            <th>وضع الأسرة</th>
+            <th>اسم الأم</th>
+            <th>الاسم الكامل</th>
           </tr>
         </thead>
         <tbody>
@@ -197,20 +225,23 @@ function AidDistribution(){
                   onChange={() => toggleSelectBeneficiary(b.id)}
                 />
               </td>
+              <td>{b.total_aids ?? "-"}</td> {/* ✅ Display total aids received */}
+              <td>{b.last_aid_date ?? "-"}</td> {/* ✅ Display last aid received date */}
+              <td>{b.phone_number || "-"}</td>
+              <td>{b.social_status || "-"}</td>
+              <td>{b.family_situation || "-"}</td>
+              <td>{b.job_type || "-"}</td>
+              <td>{b.street || "-"}</td>
+              <td>{b.family_status || "-"}</td>
+              <td>{b.mothers_name || "-"}</td>
               <td>{b.name} {b.father_name} {b.lastname}</td>
-              <td>{b.mothers_name}</td>
-              <td>{b.family_status}</td>
-              <td>{b.street}</td>
-              <td>{b.job_type}</td>
-              <td>{b.family_situation}</td>
-              <td>{b.social_status}</td>
-              <td>{b.phone_number}</td>
+                        
             </tr>
           ))}
         </tbody>
       </table>
 
-      <button onClick={handleDistributeAid}>🚀 توزيع</button>
+      
     </div>
   );
 

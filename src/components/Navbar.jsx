@@ -10,7 +10,7 @@ function Navbar({setToken}) {
     const navigate = useNavigate();
 
     const handleLogout = async() => {
-    // to be logged out  15|uO8Fa7y7wMZpwm7z5qdjYyTZMQbjDLTgZPWnkWWL028dd2c9
+   
     try{
         const token = localStorage.getItem('auth_token');
         const response = await fetch(`${baseUrl}/api/logout`, {
@@ -22,9 +22,9 @@ function Navbar({setToken}) {
         if(response.ok){
             localStorage.removeItem('auth_token');
             setToken(null);
-            navigate('/Login');
+            // navigate('/Login');
         } else{
-            alert(`logout failed  ${token}`);
+            alert(`logout failed`);
         }
 
      }catch(error){
@@ -40,7 +40,7 @@ function Navbar({setToken}) {
             <li><button style={styles.button} onClick={() => navigate('/aid-distributions')}>تقديم المساعدات</button></li> 
             <li><button style={styles.button} onClick={() => navigate('/beneficiaries')}>المستفيدون</button></li>
             <li><button style={styles.button} onClick={() => navigate('/new-beneficiary')}>إضافة مستفيد</button></li>
-            <li><button style={styles.button}>Button</button></li>
+            <li><button style={styles.button} onClick={() => navigate('/test')}>Button</button></li>
             <li><button style={styles.logoutButton} onClick={handleLogout}>تسجيل الخروج</button></li>
             </ul>
         </nav>
