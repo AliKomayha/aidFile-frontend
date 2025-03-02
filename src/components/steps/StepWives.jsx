@@ -41,7 +41,7 @@ function StepWives({ nextStep, prevStep, setBeneficiaryData, beneficiaryData }){
     // };
 
     const handleNext = () => {
-        console.log("🛠️ Wives Data Before Submitting:", wives); // ✅ Debug wives array
+        //console.log("🛠️ Wives Data Before Submitting:", wives); // ✅ Debug wives array
     
         setBeneficiaryData(prevData => ({
             ...prevData,

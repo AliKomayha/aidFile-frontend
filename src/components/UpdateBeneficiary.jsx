@@ -196,7 +196,7 @@ function UpdateBeneficiary(){
             }))
         };
     
-        console.log("🛠️ Sending Data:", JSON.stringify(formattedData, null, 2));
+        //console.log("🛠️ Sending Data:", JSON.stringify(formattedData, null, 2));
     
         try {
             const response = await fetch(`${baseUrl}/api/beneficiaries/${id}`, {

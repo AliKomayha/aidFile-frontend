@@ -66,7 +66,7 @@ function StepReview({ prevStep, beneficiaryData }) {
         setLoading(true);
         setMessage("");
 
-        console.log("🛠️ Sending Data:", JSON.stringify(beneficiaryData, null, 2));
+        //console.log("🛠️ Sending Data:", JSON.stringify(beneficiaryData, null, 2));
 
         try {
             const response = await fetch(`${baseUrl}/api/beneficiaries`, {
