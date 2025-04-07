@@ -292,6 +292,7 @@ function UpdateBeneficiary(){
             <select name="family_situation" value={beneficiary.family_situation} onChange={handleChange} required>
                 <option value="">اختر الوضع العائلي </option> {/* Default Placeholder */}
                 <option value="متأهل">متأهل</option>
+                <option value="أعزب">أعزب</option>
                 <option value="مطلق">مطلق</option>
                 <option value="أرمل">أرمل</option>
                 <option value="هاجر">هاجر</option>

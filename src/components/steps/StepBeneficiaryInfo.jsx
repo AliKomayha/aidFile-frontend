@@ -102,6 +102,7 @@ const StepBeneficiaryInfo =({ nextStep, setBeneficiaryData, beneficiaryData }) =
             <option value="">اختر الوضع العائلي </option> {/* Default Placeholder */}
             <option value="متأهل">متأهل</option>
             <option value="مطلق">مطلق</option>
+            <option value="أعزب">أعزب</option>
             <option value="أرمل">أرمل</option>
             <option value="هاجر">هاجر</option>
         </select>
