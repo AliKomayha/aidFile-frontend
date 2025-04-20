@@ -192,7 +192,7 @@ function AidDistribution(){
       <table>
         <tbody>
             <tr>
-            <th colSpan = "5">
+            <th colSpan = "7">
               {/* Aid Details */}
               <select onChange={(e) => setSelectedAid(e.target.value)}>
                   <option value="">🎁 نوع المساعدة</option>
@@ -206,7 +206,14 @@ function AidDistribution(){
           </tr>
           <tr>
           <th><button onClick={handleDistributeAid}>🚀 توزيع</button> <button onClick={exportToExcel}>📥 تصدير إلى Excel</button></th>
-            
+            <th>
+            <input
+              type="date"
+              value={distributionDate}
+              onChange={(e) => setDistributionDate(e.target.value)}
+            />
+            </th>
+            <th>: تاريخ التوزيع</th>
             
             <th><input type="number" value={unitValue} onChange={(e) => setUnitValue(e.target.value)} /> </th>
 
