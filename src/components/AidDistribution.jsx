@@ -14,6 +14,7 @@ function AidDistribution(){
     const [selectedAid, setSelectedAid] = useState("");
     const [unitValue, setUnitValue] = useState("");
     const [amount, setAmount] = useState("1");
+    const [distributionDate, setDistributionDate] = useState("");
 
     const [filters, setFilters] = useState({
         search: "",
@@ -205,6 +206,8 @@ function AidDistribution(){
           </tr>
           <tr>
           <th><button onClick={handleDistributeAid}>🚀 توزيع</button> <button onClick={exportToExcel}>📥 تصدير إلى Excel</button></th>
+            
+            
             <th><input type="number" value={unitValue} onChange={(e) => setUnitValue(e.target.value)} /> </th>
 
             <th>: القيمة</th>
@@ -225,7 +228,19 @@ function AidDistribution(){
       <table border="1" width="100%">
         <thead>
           <tr>
-            <th>✔️</th>
+            <th>
+            <input
+              type="checkbox"
+              checked={selectedBeneficiaries.length === filteredBeneficiaries.length && filteredBeneficiaries.length > 0}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedBeneficiaries(filteredBeneficiaries.map((b) => b.id));
+                } else {
+                  setSelectedBeneficiaries([]);
+                }
+              }}
+            />
+            </th>
             <th>📦 إجمالي المساعدات</th>
             <th>📅 تاريخ آخر مساعدة</th> 
             <th>رقم الهاتف</th>
@@ -236,10 +251,11 @@ function AidDistribution(){
             <th>وضع الأسرة</th>
             <th>اسم الأم</th>
             <th>الاسم الكامل</th>
+            <th>#</th>
           </tr>
         </thead>
         <tbody>
-          {filteredBeneficiaries.map((b) => (
+          {filteredBeneficiaries.map((b, index) => (
             <tr key={b.id}>
               <td>
                 <input
@@ -258,6 +274,7 @@ function AidDistribution(){
               <td>{b.family_status || "-"}</td>
               <td>{b.mothers_name || "-"}</td>
               <td>{b.name} {b.father_name} {b.lastname}</td>
+              <td>{index + 1}</td>
                         
             </tr>
           ))}
