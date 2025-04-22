@@ -123,7 +123,8 @@ function AidDistribution(){
       return;
     }
 
-    const formattedDate = new Date().toISOString().split('T')[0];
+    //const formattedDate = new Date().toISOString().split('T')[0];
+    const formattedDate = distributionDate;
 
     const payload = selectedBeneficiaries.map((beneficiaryId) => ({
       Aid_ID: selectedAid,

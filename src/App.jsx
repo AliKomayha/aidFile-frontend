@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import { useState } from 'react'
@@ -18,6 +18,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('auth_token') || '');
 
     return (
+      <BrowserRouter basename="/aidFile-frontend">
       <div>
         {token && <Navbar setToken={setToken}/>}
       
@@ -37,6 +38,7 @@ function App() {
             )}
         </Routes>
         </div>
+        </BrowserRouter>
     );
 }
 
